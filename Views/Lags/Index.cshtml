@@ -1,0 +1,54 @@
+﻿@model IEnumerable<LabbOmFotboll.Models.Lag>
+
+@{
+    ViewData["Title"] = "Fotbollslag";
+}
+
+<h1>Fotbollslag</h1>
+
+<p>
+    <a asp-action="Create">Registera nytt lag</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Lag
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.lagNamn)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">
+                    <img src="/mycollection/svg/pen-fill.svg" />
+                </a>
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    <img src="/mycollection/svg/info-circle-fill.svg" />
+                </a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">
+                    <img src="/mycollection/svg/trash-fill.svg" />
+                </a>
+            </td>
+            <td>
+                <a asp-controller="Fotbollspelares" asp-action="LagOchSpelare" asp-route-id="@item.Id">Se alla fotbollspelare i laget</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+

@@ -1,0 +1,27 @@
+﻿@model LabbOmFotboll.Models.Lag
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Radera lag</h1>
+
+<h3>Är du säker på att du vill radera följande lag?</h3>
+<div>
+    <h4>Lag</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.lagNamn)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.lagNamn)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Radera lag" class="btn btn-danger" /> |
+        <a asp-action="Index">Tillbaka till lista</a>
+    </form>
+</div>

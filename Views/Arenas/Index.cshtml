@@ -1,0 +1,30 @@
+﻿@model IEnumerable<LabbOmFotboll.Models.Arena>
+    @{
+        ViewData["Title"] = "Arenor";
+    }
+
+    <h1>Arenor</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+         
+                <th>Namn</th>
+                <th>Stad</th>
+                <th>Landskod</th>
+                <th>Kapacitet</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.arenaNamn)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Stad)</td>
+                    <td>@Html.DisplayFor(modelItem => item.landsKod)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Kapacitet)</td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>

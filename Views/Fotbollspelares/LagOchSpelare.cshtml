@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LabbOmFotboll.Models.Fotbollspelare>
+@{
+    ViewData["Title"] = "LagOchSpelare";
+}
+
+<h1>Spelare i klubben</h1>
+
+<p>
+    <a asp-action="Create">Registera ny spelare i klubben</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Namn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Langd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vikt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lag)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Namn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Langd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vikt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lag.lagNamn)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">
+                    <img src="/mycollection/svg/pen-fill.svg" />
+                </a>
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    <img src="/mycollection/svg/info-circle-fill.svg" />
+                </a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">
+                    <img src="/mycollection/svg/trash-fill.svg" />
+                </a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
