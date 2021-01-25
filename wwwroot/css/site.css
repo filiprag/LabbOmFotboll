@@ -22,6 +22,9 @@ a {
     background-color: #32D95B;
     border-color: #fff;
 }
+span.myStyleCopy {
+    color: #f00;
+}
 
 /* Sticky footer styles
 -------------------------------------------------- */

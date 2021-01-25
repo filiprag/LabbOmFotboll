@@ -15,10 +15,10 @@
             <th>
                 Lag
             </th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th>Redigera</th>
+            <th>Detaljer</th>
+            <th>Radera</th>
+            <th>Spelare i laget</th>
         </tr>
     </thead>
     <tbody>
@@ -43,7 +43,7 @@
                 </a>
             </td>
             <td>
-                <a asp-controller="Fotbollspelares" asp-action="LagOchSpelare" asp-route-id="@item.Id">Se alla fotbollspelare i laget</a>
+                <a asp-controller="Fotbollspelares" asp-action="LagOchSpelare" asp-route-id="@item.Id" class="btn btn-primary" >Se alla fotbollspelare i laget</a>
             </td>
         </tr>
 }

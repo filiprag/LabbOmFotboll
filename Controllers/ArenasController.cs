@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using LabbOmFotboll.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,18 @@ namespace LabbOmFotboll.Controllers
             }
             return View(ArenaList);
         }
+
+        //public async Task<IActionResult> CreateAsync(Arena arena)
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //   {
+        //        StringContent content = new StringContent(JsonConvert.SerializeObject(arena), Encoding.UTF8, "application/json");
+        //        await client.PostAsync("http://localhost:50432/api/Arenas", content);
+
+               
+        //   }
+
+        //}
     }
 }
 
