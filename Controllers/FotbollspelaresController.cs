@@ -21,33 +21,60 @@ namespace LabbOmFotboll.Controllers
         // GET: Fotbollspelares
         public async Task<IActionResult> Index()
         {
-            var dbModel = _context.Fotbollspelares.Include(f => f.Lag);
-            return View(await dbModel.ToListAsync());
+            try
+            {
+                var dbModel = _context.Fotbollspelares.Include(f => f.Lag);
+                return View(await dbModel.ToListAsync());
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         public async Task<IActionResult> LagOchSpelare(int? Id)
         {
-            var dbModel = _context.Fotbollspelares.Include(a => a.Lag).Where(b => b.LagId == Id);
-            return View(await dbModel.ToListAsync());
+            try
+            {
+
+                var dbModel = _context.Fotbollspelares.Include(a => a.Lag).Where(b => b.LagId == Id);
+                return View(await dbModel.ToListAsync());
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Fotbollspelares/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var fotbollspelare = await _context.Fotbollspelares
+                    .Include(f => f.Lag)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (fotbollspelare == null)
+                {
+                    return NotFound();
+                }
+
+                return View(fotbollspelare);
             }
 
-            var fotbollspelare = await _context.Fotbollspelares
-                .Include(f => f.Lag)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (fotbollspelare == null)
+            catch (Exception e)
             {
-                return NotFound();
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
             }
-
-            return View(fotbollspelare);
         }
 
         // GET: Fotbollspelares/Create
@@ -59,92 +86,127 @@ namespace LabbOmFotboll.Controllers
         }
 
         // POST: Fotbollspelares/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Namn,Langd,Vikt,LagId")] Fotbollspelare fotbollspelare)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(fotbollspelare);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                if (ModelState.IsValid)
+                {
+                    _context.Add(fotbollspelare);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["LagId"] = new SelectList(_context.Lags, "Id", "Id", fotbollspelare.LagId);
+                return View(fotbollspelare);
             }
-            ViewData["LagId"] = new SelectList(_context.Lags, "Id", "Id", fotbollspelare.LagId);
-            return View(fotbollspelare);
+
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Fotbollspelares/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var fotbollspelare = await _context.Fotbollspelares.FindAsync(id);
+                if (fotbollspelare == null)
+                {
+                    return NotFound();
+                }
+                ViewData["LagId"] = new SelectList(_context.Lags, "Id", "lagNamn", fotbollspelare.LagId);
+                return View(fotbollspelare);
             }
 
-            var fotbollspelare = await _context.Fotbollspelares.FindAsync(id);
-            if (fotbollspelare == null)
+            catch (Exception e)
             {
-                return NotFound();
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
             }
-            ViewData["LagId"] = new SelectList(_context.Lags, "Id", "lagNamn", fotbollspelare.LagId);
-            return View(fotbollspelare);
         }
 
         // POST: Fotbollspelares/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Namn,Langd,Vikt,LagId")] Fotbollspelare fotbollspelare)
         {
-            if (id != fotbollspelare.Id)
+            try
             {
-                return NotFound();
+
+                if (id != fotbollspelare.Id)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(fotbollspelare);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!FotbollspelareExists(fotbollspelare.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["LagId"] = new SelectList(_context.Lags, "Id", "Id", fotbollspelare.LagId);
+                return View(fotbollspelare);
             }
 
-            if (ModelState.IsValid)
+             catch (Exception e)
             {
-                try
-                {
-                    _context.Update(fotbollspelare);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FotbollspelareExists(fotbollspelare.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
             }
-            ViewData["LagId"] = new SelectList(_context.Lags, "Id", "Id", fotbollspelare.LagId);
-            return View(fotbollspelare);
         }
 
         // GET: Fotbollspelares/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
 
-            var fotbollspelare = await _context.Fotbollspelares
-                .Include(f => f.Lag)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (fotbollspelare == null)
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var fotbollspelare = await _context.Fotbollspelares
+                    .Include(f => f.Lag)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (fotbollspelare == null)
+                {
+                    return NotFound();
+                }
+
+                return View(fotbollspelare);
+            }
+            catch (Exception e)
             {
-                return NotFound();
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
             }
-
-            return View(fotbollspelare);
         }
 
         // POST: Fotbollspelares/Delete/5
@@ -152,10 +214,18 @@ namespace LabbOmFotboll.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var fotbollspelare = await _context.Fotbollspelares.FindAsync(id);
-            _context.Fotbollspelares.Remove(fotbollspelare);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var fotbollspelare = await _context.Fotbollspelares.FindAsync(id);
+                _context.Fotbollspelares.Remove(fotbollspelare);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         private bool FotbollspelareExists(int id)

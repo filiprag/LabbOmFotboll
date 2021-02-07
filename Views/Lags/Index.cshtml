@@ -29,21 +29,21 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">
-                    <img src="/mycollection/svg/pen-fill.svg"data-toggle="tooltip" data-placement="top" title="Redigera laget" />
+                    <img src="/mycollection/svg/pen-fill.svg" data-toggle="tooltip" data-placement="top" title="Redigera laget" /> @*Använder SVG bild som ikon&länk*@
                 </a>
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id">
-                    <img src="/mycollection/svg/info-circle-fill.svg" data-toggle="tooltip" data-placement="top" title="Information om laget" />
+                    <img src="/mycollection/svg/info-circle-fill.svg" data-toggle="tooltip" data-placement="top" title="Information om laget" /> @*Använder SVG bild som ikon&länk*@
                 </a>
             </td>
             <td>
                 <a asp-action="Delete" asp-route-id="@item.Id">
-                    <img src="/mycollection/svg/trash-fill.svg" data-toggle="tooltip" data-placement="top" title="Radera laget" />
+                    <img src="/mycollection/svg/trash-fill.svg" data-toggle="tooltip" data-placement="top" title="Radera laget" /> @*Använder SVG bild som ikon&länk*@
                 </a>
             </td>
             <td>
-                <a asp-controller="Fotbollspelares" asp-action="LagOchSpelare" asp-route-id="@item.Id" class="btn btn-primary" >Se alla fotbollspelare i laget</a>
+                <a asp-controller="Fotbollspelares" asp-action="LagOchSpelare" asp-route-id="@item.Id" class="btn btn-primary" >Se alla fotbollspelare i laget</a> 
             </td>
         </tr>
 }

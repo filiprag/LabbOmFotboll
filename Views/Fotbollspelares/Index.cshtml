@@ -46,17 +46,17 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">
-                    <img src="/mycollection/svg/pen-fill.svg" data-toggle="tooltip" data-placement="top" title="Redigera spelaren" />
+                    <img src="/mycollection/svg/pen-fill.svg" data-toggle="tooltip" data-placement="top" title="Redigera spelaren" /> @*Använder SVG bild som ikon&länk*@
                 </a>
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id">
-                    <img src="/mycollection/svg/info-circle-fill.svg" data-toggle="tooltip" data-placement="top" title="Information om spelaren" />
+                    <img src="/mycollection/svg/info-circle-fill.svg" data-toggle="tooltip" data-placement="top" title="Information om spelaren" /> @*Använder SVG bild som ikon&länk*@
                 </a>
             </td>
             <td>
                 <a asp-action="Delete" asp-route-id="@item.Id">
-                    <img src="/mycollection/svg/trash-fill.svg" data-toggle="tooltip" data-placement="top" title="Radera spelaren" />
+                    <img src="/mycollection/svg/trash-fill.svg" data-toggle="tooltip" data-placement="top" title="Radera spelaren" /> @*Använder SVG bild som ikon&länk*@
                 </a>
             </td>
         </tr>

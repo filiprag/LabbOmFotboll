@@ -21,25 +21,44 @@ namespace LabbOmFotboll.Controllers
         // GET: Lags
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Lags.ToListAsync());
+            try
+            {
+
+              return View(await _context.Lags.ToListAsync());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Lags/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
 
-            var lag = await _context.Lags
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (lag == null)
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var lag = await _context.Lags
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (lag == null)
+                {
+                    return NotFound();
+                }
+
+                return View(lag);
+            }
+            catch (Exception e)
             {
-                return NotFound();
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
             }
-
-            return View(lag);
         }
 
         // GET: Lags/Create
@@ -49,88 +68,121 @@ namespace LabbOmFotboll.Controllers
         }
 
         // POST: Lags/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,lagNamn")] Lag lag)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(lag);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                if (ModelState.IsValid)
+                {
+                    _context.Add(lag);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(lag);
             }
-            return View(lag);
+
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Lags/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
 
-            var lag = await _context.Lags.FindAsync(id);
-            if (lag == null)
-            {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var lag = await _context.Lags.FindAsync(id);
+                if (lag == null)
+                {
+                    return NotFound();
+                }
+                return View(lag);
             }
-            return View(lag);
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Lags/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,lagNamn")] Lag lag)
         {
-            if (id != lag.Id)
+            try
             {
-                return NotFound();
-            }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (id != lag.Id)
                 {
-                    _context.Update(lag);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+
+                if (ModelState.IsValid)
                 {
-                    if (!LagExists(lag.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(lag);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!LagExists(lag.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                return View(lag);
             }
-            return View(lag);
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Lags/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
 
-            var lag = await _context.Lags
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (lag == null)
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var lag = await _context.Lags
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (lag == null)
+                {
+                    return NotFound();
+                }
+
+                return View(lag);
+            }
+            catch (Exception e)
             {
-                return NotFound();
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
             }
-
-            return View(lag);
         }
 
         // POST: Lags/Delete/5
@@ -138,10 +190,19 @@ namespace LabbOmFotboll.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var lag = await _context.Lags.FindAsync(id);
-            _context.Lags.Remove(lag);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+
+                var lag = await _context.Lags.FindAsync(id);
+                _context.Lags.Remove(lag);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         private bool LagExists(int id)
